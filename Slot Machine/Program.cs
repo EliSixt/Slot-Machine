@@ -5,7 +5,7 @@ namespace Slot_Machine
     class Program
     {
         /// <summary>
-        /// Checks to see if an array within a 2D array contains matching value (Horizontally) 
+        /// Checks to see if an array within a 2D array contains matching values (Horizontally) 
         /// </summary>
         /// <param name="linePosition">The rank position to be looped through and compared</param>
         /// <param name="twoDArray">The 2D array being looped through</param>
@@ -21,6 +21,23 @@ namespace Slot_Machine
             }
             return true;
         }
+        /// <summary>
+        /// Checks to see if an array within a 2D array contains matching values (vertically)
+        /// </summary>
+        /// <param name="linePosition">The rank position to be looped through and compared</param>
+        /// <param name="twoDArray">The 2D array being looped through</param>
+        /// <returns></returns>
+        static bool VerticalTracker(int linePosition, int[,] twoDArray)
+        {
+            for (int i = 0; i < twoDArray.GetLength(0); i++)
+            {
+                if (twoDArray[0, linePosition] != twoDArray[i, linePosition])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         static void Main(string[] args)
         {
             int[,] slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
@@ -29,6 +46,8 @@ namespace Slot_Machine
             //int secondPlacedBet = 0;
 
             //Making some sort of referencing for userInput to place bets on.
+
+
 
             Console.WriteLine("   a b c");
             int listing = 1;
@@ -69,7 +88,7 @@ namespace Slot_Machine
                 Console.WriteLine();
             }
 
-            if(HorizontalTracker(1, slotArrayValues))
+            if (HorizontalTracker(1, slotArrayValues))
             {
                 totalMoney += firstPlacedBet * 2;
                 Console.WriteLine("You Win! =)");
@@ -78,6 +97,7 @@ namespace Slot_Machine
             {
                 Console.WriteLine($"You Lose, your total is ${totalMoney}.");
             }
+
 
 
             //****TODO: later on embed these next statements in a while loop, while they have money left to bet and
@@ -216,6 +236,6 @@ namespace Slot_Machine
             //}
         }
 
-        
+
     }
 }
