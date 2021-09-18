@@ -42,63 +42,104 @@ namespace Slot_Machine
         {
             int[,] slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
             int totalMoney = 3;
-            int firstPlacedBet = 0;
-            //int secondPlacedBet = 0;
-
-            //Making some sort of referencing for userInput to place bets on.
+            int placedBet = 0;
 
 
-
-            Console.WriteLine("   a b c");
-            int listing = 1;
-            for (int i = 0; i < 3; i++)
+            bool motivationAndMoney = true;
+            while (motivationAndMoney && totalMoney > 0)
             {
-                Console.Write($"{listing++}. ");
-                for (int j = 0; j < 3; j++)
+
+                Console.WriteLine("Do you wanna make a bet? yes/no");
+                string yesOrNoAnswer = Convert.ToString(Console.ReadLine());
+                if (yesOrNoAnswer == "no")
                 {
-                    Console.Write(slotArrayValues[i, j] + " ");
+                    Console.Clear();
+                    Console.WriteLine($"Your cashout is ${totalMoney}!");
+                    break;
                 }
-                Console.WriteLine();
-            }
+                Console.Clear();
 
-            Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on the center line?");
-            firstPlacedBet = Convert.ToInt32(Console.ReadLine());
-            totalMoney -= firstPlacedBet;
-            //looping through and adding random numbers to each position in array then displaying it. 
+                //Making some visual referencing for userInput to place bets on.
 
-            Random rng = new Random();
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
+                Console.WriteLine("   a b c");
+                int listing = 1;
+                for (int i = 0; i < 3; i++)
                 {
-                    int randomthreeNums = rng.Next(1, 4);
-                    slotArrayValues[i, j] = randomthreeNums;
+                    Console.Write($"{listing++}. ");
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Console.Write(slotArrayValues[i, j] + " ");
+                    }
+                    Console.WriteLine();
                 }
-            }
 
-            Console.WriteLine("   a b c");
-            listing = 1;
-            for (int i = 0; i < 3; i++)
-            {
-                Console.Write($"{listing++}. ");
-                for (int j = 0; j < 3; j++)
+
+
+                Console.WriteLine("Choose a Line!");//Fixed on center horizontal line while making changes all around first.
+                string firstInputPosition = Convert.ToString(Console.ReadLine());
+                Console.Clear();
+
+                //Checks to see if theres enough money to make that bet
+                //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
+                bool creditChecking = true;
+                while (creditChecking)
                 {
-                    Console.Write(slotArrayValues[i, j] + " ");
+                    Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on that line?");//TODO add a limiter 
+                    placedBet = Convert.ToInt32(Console.ReadLine());
+                    if ((totalMoney - placedBet) >= 0)
+                    {
+                        creditChecking = false;
+                        totalMoney -= placedBet;
+                        Console.Clear();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please stay within your limit.");
+                    }
+
                 }
-                Console.WriteLine();
-            }
 
-            if (HorizontalTracker(1, slotArrayValues))
+
+
+                //looping through and adding random numbers to each position in array then displaying it. 
+
+                Random rng = new Random();
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        int randomthreeNums = rng.Next(1, 4);
+                        slotArrayValues[i, j] = randomthreeNums;
+                    }
+                }
+
+                Console.WriteLine("   a b c");
+                listing = 1;
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.Write($"{listing++}. ");
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Console.Write(slotArrayValues[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+
+                if (HorizontalTracker(1, slotArrayValues))//Fixed on center horizontal line while making changes all around first.
+                {
+                    totalMoney += placedBet * 2;
+                    Console.WriteLine("You Win! =)");
+                }
+                else
+                {
+                    Console.WriteLine($"You Lose.");
+                }
+
+            }
+            if (totalMoney <= 0)
             {
-                totalMoney += firstPlacedBet * 2;
-                Console.WriteLine("You Win! =)");
+            Console.WriteLine("You ran out of money =(");
             }
-            else
-            {
-                Console.WriteLine($"You Lose, your total is ${totalMoney}.");
-            }
-
-
 
             //****TODO: later on embed these next statements in a while loop, while they have money left to bet and
             //while they wanna keep on playing. Try to figure out if you can automatically make
@@ -142,15 +183,23 @@ namespace Slot_Machine
 
             //if (totalMoney > 0)
             //{
-            //    Console.WriteLine("Do you wanna make another bet? yes/no");
-            //    string yesNoAnswerOnBet = Convert.ToString(Console.ReadLine());
+            //    Console.WriteLine("Do you wanna make a bet? yes/no");
+            //    bool yesNoAnswerOnBet;
+            //    if (Convert.ToString(Console.ReadLine()) == "yes")
+            //    {
+            //        yesNoAnswerOnBet = true;
+            //    }
+            //    else
+            //    {
+            //        yesNoAnswerOnBet = false;
+            //    }
             //    Console.Clear();
 
-            //    if (yesNoAnswerOnBet == "yes")
+            //    if (yesNoAnswerOnBet)
             //    {
             //        //displaying the grid
             //        Console.WriteLine("   a b c");
-            //        listing = 1;
+            //        int listing = 1;
             //        for (int i = 0; i < 3; i++)
             //        {
             //            Console.Write($"{listing++}. ");
@@ -162,19 +211,19 @@ namespace Slot_Machine
             //        }
 
             //        Console.WriteLine("Choose a Line!");//TODO: make sure they arent choosing the same line, temprary fix is to just add it on the PlacedBet
-            //        string secondInputPosition = Convert.ToString(Console.ReadLine());
+            //        string firstInputPosition = Convert.ToString(Console.ReadLine());
             //        Console.Clear();
 
             //        //checking to see that the user doesnt enter a huge amount that they dont have, making the program crash later.
-            //        creditChecking = true;
+            //        bool creditChecking = true;
             //        while (creditChecking)
             //        {
             //            Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on that line?");//TODO add a limiter 
-            //            secondPlacedBet = Convert.ToInt32(Console.ReadLine());
-            //            if ((totalMoney - secondPlacedBet) >= 0)
+            //            firstPlacedBet = Convert.ToInt32(Console.ReadLine());
+            //            if ((totalMoney - firstPlacedBet) >= 0)
             //            {
             //                creditChecking = false;
-            //                totalMoney -= secondPlacedBet;
+            //                totalMoney -= firstPlacedBet;
             //                Console.Clear();
             //            }
             //            else
