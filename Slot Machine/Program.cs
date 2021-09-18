@@ -26,7 +26,7 @@ namespace Slot_Machine
         /// </summary>
         /// <param name="linePosition">The rank position to be looped through and compared</param>
         /// <param name="twoDArray">The 2D array being looped through</param>
-        /// <returns></returns>
+        /// <returns>Boolean</returns>
         static bool VerticalTracker(int linePosition, int[,] twoDArray)
         {
             for (int i = 0; i < twoDArray.GetLength(0); i++)
@@ -38,10 +38,49 @@ namespace Slot_Machine
             }
             return true;
         }
+        /// <summary>
+        /// Checks to see if the player's choice has  matching values.
+        /// </summary>
+        /// <param name="inputPosition">player's input position from the graph</param>
+        /// <param name="twoDArray">The 2D array being looped through</param>
+        /// <returns>Boolean</returns>
+        static bool WinningSlot(string inputPosition, int[,] twoDArray)
+        {
+            //Converting player slot horizontal input into array position
+            if (inputPosition == "1")
+            {
+                return HorizontalTracker(0, twoDArray);
+            }
+            if (inputPosition == "2")
+            {
+                return HorizontalTracker(1, twoDArray);
+            }
+            if (inputPosition == "3")
+            {
+                return HorizontalTracker(2, twoDArray);
+            }
+            //Converting player slot verticaL input into array position
+            if (inputPosition == "a")
+            {
+                return VerticalTracker(0, twoDArray);
+            }
+            if (inputPosition == "b")
+            {
+                return VerticalTracker(1, twoDArray);
+            }
+            if (inputPosition == "c")
+            {
+                return VerticalTracker(2, twoDArray);
+            }
+            else
+            {
+                return false;
+            }
+        }
         static void Main(string[] args)
         {
             int[,] slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
-            int totalMoney = 3;
+            int totalMoney = 30;
             int placedBet = 0;
 
 
@@ -60,7 +99,7 @@ namespace Slot_Machine
                 Console.Clear();
 
                 //Making some visual referencing for userInput to place bets on.
-
+                slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
                 Console.WriteLine("   a b c");
                 int listing = 1;
                 for (int i = 0; i < 3; i++)
@@ -76,11 +115,13 @@ namespace Slot_Machine
 
 
                 Console.WriteLine("Choose a Line!");//Fixed on center horizontal line while making changes all around first.
-                string firstInputPosition = Convert.ToString(Console.ReadLine());
+                string inputPosition = Convert.ToString(Console.ReadLine());
+                //int slotPosition = InputConverter(inputPosition);
                 Console.Clear();
 
                 //Checks to see if theres enough money to make that bet
                 //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
+
                 bool creditChecking = true;
                 while (creditChecking)
                 {
@@ -98,6 +139,9 @@ namespace Slot_Machine
                     }
 
                 }
+
+
+
 
 
 
@@ -125,12 +169,14 @@ namespace Slot_Machine
                     Console.WriteLine();
                 }
 
-                if (HorizontalTracker(1, slotArrayValues))//Fixed on center horizontal line while making changes all around first.
+                bool matchingValues = WinningSlot(inputPosition, slotArrayValues);
+
+                if (matchingValues)//Fixed on center horizontal line while making changes all around first.
                 {
                     totalMoney += placedBet * 2;
                     Console.WriteLine("You Win! =)");
                 }
-                else
+                if (!matchingValues)
                 {
                     Console.WriteLine($"You Lose.");
                 }
@@ -138,7 +184,7 @@ namespace Slot_Machine
             }
             if (totalMoney <= 0)
             {
-            Console.WriteLine("You ran out of money =(");
+                Console.WriteLine("You ran out of money =(");
             }
 
             //****TODO: later on embed these next statements in a while loop, while they have money left to bet and
