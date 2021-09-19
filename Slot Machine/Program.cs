@@ -143,12 +143,10 @@ namespace Slot_Machine
             bool motivationAndMoney = true;
             while (motivationAndMoney && totalMoney > 0)
             {
-                Console.WriteLine("Do you wanna make a bet? yes/no");
-                string yesOrNoAnswer = Convert.ToString(Console.ReadLine());
-                if (yesOrNoAnswer == "no")
+                
+                if (UI.AskToContinue() == false)
                 {
-                    Console.Clear();
-                    Console.WriteLine($"Your cashout is ${totalMoney}!");
+                    UI.CashOut(totalMoney);
                     break;
                 }
                 Console.Clear();
