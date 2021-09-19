@@ -76,8 +76,22 @@ namespace Slot_Machine
         /// <param name="inputPosition">player's input position from the graph</param>
         /// <param name="twoDArray">The 2D array being looped through</param>
         /// <returns>Boolean</returns>
-        static bool WinningSlot(string inputPosition, int[,] twoDArray)
+        static bool IsWinningSlot(string inputPosition, int[,] twoDArray)
         {
+            switch(inputPosition)
+            {
+                case "1":
+                    return HorizontalTracker(0, twoDArray);
+                case "2":
+                    return HorizontalTracker(0, twoDArray);
+                case "1a":
+                case "a1": 
+                    return AscendingDiagonalTracker(twoDArray);
+
+                default:
+                    return false;
+            }
+
             //Checking values of horizontal slot, returning bool
             if (inputPosition == "1")
             {
@@ -119,6 +133,7 @@ namespace Slot_Machine
                 return false;
             }
         }
+
         static void Main(string[] args)
         {
             int[,] slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
@@ -140,19 +155,9 @@ namespace Slot_Machine
 
                 //Making some visual referencing for userInput to place bets on.
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
-                Console.WriteLine("   a b c");
-                int listing = 1;
-                for (int i = 0; i < 3; i++)
-                {
-                    Console.Write($"{listing++}. ");
-                    for (int j = 0; j < 3; j++)
-                    {
-                        Console.Write(slotArrayValues[i, j] + " ");
-                    }
-                    Console.WriteLine();
-                }
+                UI.DisplaySlots(slotArrayValues);
 
-
+                
                 Console.WriteLine("Choose a Line!");//Fixed on center horizontal line while making changes all around first.
                 string inputPosition = Convert.ToString(Console.ReadLine());
                 //int slotPosition = InputConverter(inputPosition);
@@ -193,7 +198,7 @@ namespace Slot_Machine
                 }
 
                 Console.WriteLine("   a b c");
-                listing = 1;
+                int listing = 1;
                 for (int i = 0; i < 3; i++)
                 {
                     Console.Write($"{listing++}. ");
@@ -204,16 +209,17 @@ namespace Slot_Machine
                     Console.WriteLine();
                 }
 
-                bool matchingValues = WinningSlot(inputPosition, slotArrayValues);
+                bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
 
-                if (matchingValues)//Fixed on center horizontal line while making changes all around first.
+                if (matchingValues)
                 {
                     totalMoney += placedBet * 2;
                     Console.WriteLine("You Win! =)");
+                    Console.WriteLine($"You have ${totalMoney}!");
                 }
                 if (!matchingValues)
                 {
-                    Console.WriteLine($"You Lose.");
+                    Console.WriteLine($"You Lose, you have ${totalMoney}.");
                 }
 
             }
