@@ -26,6 +26,28 @@ namespace Slot_Machine
                 return false;
             }
         }
+        public static int WinningResult(bool matchingValues, int placedBet, int totalMoney)
+        {
+
+            if (matchingValues)
+            {
+                Console.WriteLine("You Win! =)");
+                Console.WriteLine($"You have ${totalMoney}!");
+                return totalMoney += placedBet * 2;
+            }
+            else
+            {
+                Console.WriteLine($"You Lose, you have ${totalMoney}.");
+                return totalMoney;
+            }
+        }
+        public static string ChooseALine()
+        {
+            Console.WriteLine("Choose a Line!");
+            Console.WriteLine("Ex: 1, 2, 3 or a, b, c or 1a, 1c");
+            string chosenLine = Console.ReadLine();
+            return chosenLine;
+        }
         public static void DisplaySlots(int[,] array)
         {
             //   array = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };

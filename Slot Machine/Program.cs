@@ -25,15 +25,11 @@ namespace Slot_Machine
                 //Making some visual referencing for userInput to place bets on.
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
                 UI.DisplaySlots(slotArrayValues);
-
-                
-                Console.WriteLine("Choose a Line!");
-                string inputPosition = Console.ReadLine();
-                Console.Clear();
+               
+                string inputPosition = UI.ChooseALine();
 
                 //Checks to see if theres enough money to make that bet
                 //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
-
                 bool enoughMoney = false;
                 while (!enoughMoney)
                 {
@@ -58,17 +54,8 @@ namespace Slot_Machine
 
                 bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
 
-                if (matchingValues)
-                {
-                    totalMoney += placedBet * 2;
-                    Console.WriteLine("You Win! =)");
-                    Console.WriteLine($"You have ${totalMoney}!");
-                }
-                if (!matchingValues)
-                {
-                    Console.WriteLine($"You Lose, you have ${totalMoney}.");
-                }
-
+                //checks to see if the matchingValues is true/false and returns the winning results or losing consequences 
+                UI.WinningResult(matchingValues, placedBet, totalMoney);
             }
             if (totalMoney <= 0)
             {
@@ -190,11 +177,11 @@ namespace Slot_Machine
                     return VerticalTracker(1, twoDArray);
                 case "c":
                     return VerticalTracker(2, twoDArray);
-                case "1a":
-                case "a1": 
-                    return AscendingDiagonalTracker(twoDArray);
                 case "1c":
                 case "c1":
+                    return AscendingDiagonalTracker(twoDArray);
+                case "1a":
+                case "a1":
                     return DescendingDiagonalTracker(twoDArray);
                 default:
                     return false;
