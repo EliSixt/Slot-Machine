@@ -52,19 +52,8 @@ namespace Slot_Machine
 
                 }
 
-
                 //looping through and adding random numbers to each position in array then displaying it. 
-
-                Random rng = new Random();
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        int randomthreeNums = rng.Next(0, 3);
-                        slotArrayValues[i, j] = randomthreeNums;
-                    }
-                }
-
+                RandomNumsIntoArray(slotArrayValues);
                 UI.DisplaySlots(slotArrayValues);
 
                 bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
@@ -93,6 +82,24 @@ namespace Slot_Machine
 
             //user starts with $3. Gets asked what they want to bet on and how much on each.
             //TODO: make functions as flexible as posible so placing jagged bets wont be an issue.
+        }
+        /// <summary>
+        /// Takes in a 2D array and loops through it replacing/adding 0-2 numbers randomly.
+        /// </summary>
+        /// <param name="slotArrayValues">2D array to be filled up with random numbers.</param>
+        /// <returns>Same array with randomly chosen numbers</returns>
+        static int[,] RandomNumsIntoArray(int[,] slotArrayValues)
+        {
+            Random rng = new Random();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    int randomthreeNums = rng.Next(0, 3);
+                    slotArrayValues[i, j] = randomthreeNums;
+                }
+            }
+            return slotArrayValues;
         }
 
         /// <summary>
@@ -183,14 +190,12 @@ namespace Slot_Machine
                     return VerticalTracker(1, twoDArray);
                 case "c":
                     return VerticalTracker(2, twoDArray);
-
                 case "1a":
                 case "a1": 
                     return AscendingDiagonalTracker(twoDArray);
                 case "1c":
                 case "c1":
                     return DescendingDiagonalTracker(twoDArray);
-
                 default:
                     return false;
             }
