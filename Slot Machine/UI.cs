@@ -26,25 +26,12 @@ namespace Slot_Machine
                 return false;
             }
         }
-        public static int WinningResult(bool matchingValues, int placedBet, int totalMoney)
-        {
-
-            if (matchingValues)
-            {
-                Console.WriteLine("You Win! =)");
-                Console.WriteLine($"You have ${totalMoney}!");
-                return totalMoney += placedBet * 2;
-            }
-            else
-            {
-                Console.WriteLine($"You Lose, you have ${totalMoney}.");
-                return totalMoney;
-            }
-        }
         public static string ChooseALine()
         {
             Console.WriteLine("Choose a Line!");
-            Console.WriteLine("Ex: 1, 2, 3 or a, b, c or 1a, 1c");
+            Console.WriteLine("For rows choose: 1, 2, or 3");
+            Console.WriteLine("For columns choose: a, b, or c");
+            Console.WriteLine("For diagonals choose: 1a or 1c");
             string chosenLine = Console.ReadLine();
             return chosenLine;
         }

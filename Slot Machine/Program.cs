@@ -25,8 +25,20 @@ namespace Slot_Machine
                 //Making some visual referencing for userInput to place bets on.
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
                 UI.DisplaySlots(slotArrayValues);
-               
+
                 string inputPosition = UI.ChooseALine();
+
+                //TODO:Need the option of all horzontal lines, all diagonal lines, or all vertical lines.
+                //run a loop through the string inputPosition and add each position coordinate (condition separated by a space) to a List<string>
+                //Then run each item in the list through the existing program and return a winning display if TotalMoney changed.
+
+                //string[] betPlacedSlotPostions = inputPosition.Split(' ');
+                //foreach (var betPlaced in betPlacedSlotPostions)
+                //{
+                //    //run the existing methods here so that they will return true/false foreach betPlaced and change totalMoney.
+                //}
+                ////display result based on totalMoney going up or down 
+
 
                 //Checks to see if theres enough money to make that bet
                 //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
@@ -45,30 +57,22 @@ namespace Slot_Machine
                     {
                         Console.WriteLine("Please stay within your limit.");
                     }
-
                 }
 
                 //looping through and adding random numbers to each position in array then displaying it. 
                 RandomNumsIntoArray(slotArrayValues);
+
                 UI.DisplaySlots(slotArrayValues);
 
                 bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
 
                 //checks to see if the matchingValues is true/false and returns the winning results or losing consequences 
-                UI.WinningResult(matchingValues, placedBet, totalMoney);
+                WinningResult(matchingValues, placedBet, totalMoney);
             }
             if (totalMoney <= 0)
             {
                 Console.WriteLine("You ran out of money =(");
             }
-
-            //****TODO: later on embed these next statements in a while loop, while they have money left to bet and
-            //while they wanna keep on playing. Try to figure out if you can automatically make
-            //new varibles/names with those bets and lines to reference and check them later.
-            //Or if somehow you can add a loop and reuse some premade variables for InputPosition/PlacedBet, or add a limit.****
-
-            //user starts with $3. Gets asked what they want to bet on and how much on each.
-            //TODO: make functions as flexible as posible so placing jagged bets wont be an issue.
         }
         /// <summary>
         /// Takes in a 2D array and loops through it replacing/adding 0-2 numbers randomly.
@@ -88,7 +92,6 @@ namespace Slot_Machine
             }
             return slotArrayValues;
         }
-
         /// <summary>
         /// Checks for matching diagonal values (diagonally ascending)
         /// </summary>
@@ -98,7 +101,7 @@ namespace Slot_Machine
         {
             for (int i = 0; i < twoDArray.GetLength(0); i++)
             {
-                if (twoDArray[0, 2] != twoDArray[i, (2-i)])
+                if (twoDArray[0, 2] != twoDArray[i, (2 - i)])
                 {
                     return false;
                 }
@@ -163,7 +166,7 @@ namespace Slot_Machine
         /// <returns>Boolean</returns>
         static bool IsWinningSlot(string inputPosition, int[,] twoDArray)
         {
-            switch(inputPosition)
+            switch (inputPosition)
             {
                 case "1":
                     return HorizontalTracker(0, twoDArray);
@@ -187,6 +190,29 @@ namespace Slot_Machine
                     return false;
             }
         }
+        /// <summary>
+        /// Checks to see if the matchingValues is true/false and returns the winning display and totalMoney plus the placedBet multiplier.
+        /// Else it returns the losing display, totalMoney is unchanged.
+        /// </summary>
+        /// <param name="matchingValues">A variable result that checks to see if the player's choice has matching values.</param>
+        /// <param name="placedBet">Player's money bet.</param>
+        /// <param name="totalMoney">The total amount of money.</param>
+        /// <returns></returns>
+        static int WinningResult(bool matchingValues, int placedBet, int totalMoney)
+        {
 
+            if (matchingValues)
+            {
+                totalMoney += placedBet * 2;
+                Console.WriteLine("You Win! =)");
+                Console.WriteLine($"You have ${totalMoney}!");
+                return totalMoney;
+            }
+            else
+            {
+                Console.WriteLine($"You Lose, you have ${totalMoney}.");
+                return totalMoney;
+            }
+        }
     }
 }
