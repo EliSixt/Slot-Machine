@@ -32,6 +32,7 @@ namespace Slot_Machine
             Console.WriteLine("For rows choose: 1, 2, or 3");
             Console.WriteLine("For columns choose: a, b, or c");
             Console.WriteLine("For diagonals choose: 1a or 1c");
+            Console.WriteLine("Please separate inputs by a space.");
             string chosenLine = Console.ReadLine();
             return chosenLine;
         }

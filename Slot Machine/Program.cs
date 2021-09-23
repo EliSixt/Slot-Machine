@@ -31,35 +31,33 @@ namespace Slot_Machine
                 //run a loop through the string inputPosition and add each position coordinate (condition separated by a space) to a List<string>
                 //Then run each item in the list through the existing program and return a winning display if TotalMoney changed.
 
-                string[] betPlacedSlotPostions = inputPosition.Split(' ');
-                foreach (var betPlaced in betPlacedSlotPostions)
-                {
-
-                    //run the existing methods here so that they will return true/false foreach betPlaced and change totalMoney.
-                }
+                string[] betPlaceSlotPostions = inputPosition.Split(' ');
                 //display result based on totalMoney going up or down 
-
-
 
                 //Checks to see if theres enough money to make that bet
                 //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
-                placedBet = confirmingPlacedBet(totalMoney, placedBet);
-                totalMoney -= placedBet;
+                placedBet = ConfirmingPlacedBet(totalMoney, placedBet, betPlaceSlotPostions);
+                totalMoney -= (placedBet * betPlaceSlotPostions.Length);
 
-                //looping through and adding random numbers to each position in array then displaying it. 
+                //loops through and adds random numbers to each position in array then display it. 
                 RandomNumsIntoArray(slotArrayValues);
-
                 UI.DisplaySlots(slotArrayValues);
 
+                foreach (var betPlace in betPlaceSlotPostions)
+                {
+                    //run the existing methods here so that they will return true/false foreach betPlaced and change totalMoney.
+                    bool matchingValues = IsWinningSlot(betPlace, slotArrayValues);
+                    totalMoney = WinningResult(matchingValues, placedBet, totalMoney, betPlace);
+                }
                 //Checking if player's choice has all matching values
-                bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
+                //bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
 
                 //checks to see if the matchingValues is true/false and returns the winning results or losing consequences 
-                totalMoney = WinningResult(matchingValues, placedBet, totalMoney);
+                //totalMoney = WinningResult(matchingValues, placedBet, totalMoney);
             }
             if (totalMoney <= 0)
             {
-                Console.WriteLine("You ran out of money =(");
+                Console.WriteLine("You ran out of money. Game Over. =(");
             }
         }
         /// <summary>
@@ -113,19 +111,20 @@ namespace Slot_Machine
             return true;
         }
         /// <summary>
-        /// Confirms if theres enough money to make that bet and that the user doesnt enter a huge amount that they dont have.
+        /// Confirms if theres enough money to make that bet (by multiplying number of bets by the placedBet and subtracting it from the total) 
+        /// so that the user doesnt enter a huge amount that they dont have.
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>
         /// <param name="placedBet">Player's money bet.</param>
         /// <returns>placedBet</returns>
-        static int confirmingPlacedBet(int totalMoney, int placedBet)
+        static int ConfirmingPlacedBet(int totalMoney, int placedBet, string[] betPlacedSlotPositions)
         {
             bool enoughMoney = false;
             while (!enoughMoney)
             {
-                Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on that line?");//TODO add a limiter 
+                Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on each of those lines?");//TODO add a limiter 
                 placedBet = Convert.ToInt32(Console.ReadLine());
-                if ((totalMoney - placedBet) >= 0)
+                if ((totalMoney >= (betPlacedSlotPositions.Length * placedBet)))
                 {
                     enoughMoney = true;
                     Console.Clear();
@@ -137,6 +136,27 @@ namespace Slot_Machine
             }
             return placedBet;
         }
+        //static int confirmingPlacedBet(int totalMoney, int placedBet)
+        //{
+        //    bool enoughMoney = false;
+        //    while (!enoughMoney)
+        //    {
+        //        Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on that line?");//TODO add a limiter 
+        //        placedBet = Convert.ToInt32(Console.ReadLine());
+        //        if ((totalMoney - placedBet) >= 0)
+        //        {
+        //            enoughMoney = true;
+        //            Console.Clear();
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Please stay within your limit.");
+        //        }
+        //    }
+        //    return placedBet;
+        //}
+
+
         /// <summary>
         /// Checks to see if an array within a 2D array contains matching values (Horizontally) 
         /// </summary>
@@ -211,18 +231,18 @@ namespace Slot_Machine
         /// <param name="placedBet">Player's money bet.</param>
         /// <param name="totalMoney">The total amount of money.</param>
         /// <returns></returns>
-        static int WinningResult(bool matchingValues, int placedBet, int totalMoney)
+        static int WinningResult(bool matchingValues, int placedBet, int totalMoney, string theLinePosition)
         {
 
             if (matchingValues)
             {
                 totalMoney += placedBet * 2;
-                Console.WriteLine("You Win! =)");
-                Console.WriteLine($"You have ${totalMoney}!");
+                Console.WriteLine($"You Won on {theLinePosition}! =) You now have ${totalMoney}!");
+                //Console.WriteLine($"You have ${totalMoney}!");
             }
             else
             {
-                Console.WriteLine($"You Lose, you have ${totalMoney}.");
+                Console.WriteLine($"You Lost your bet on {theLinePosition}. =(");
             }
             return totalMoney;
         }
