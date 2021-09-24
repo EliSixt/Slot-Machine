@@ -26,6 +26,11 @@ namespace Slot_Machine
                 return false;
             }
         }
+        /// <summary>
+        /// Tells the player to choose a line and all the options. Creates a string variable 
+        /// with the input and returns it.
+        /// </summary>
+        /// <returns>Player's line choice(s) as a string.</returns>
         public static string ChooseALine()
         {
             Console.WriteLine("Choose a Line!");

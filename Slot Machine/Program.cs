@@ -25,35 +25,32 @@ namespace Slot_Machine
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
                 UI.DisplaySlots(slotArrayValues);
 
-                string inputPosition = UI.ChooseALine();
 
                 //TODO:Need the option of all horzontal lines, all diagonal lines, or all vertical lines.
-                //run a loop through the string inputPosition and add each position coordinate (condition separated by a space) to a List<string>
-                //Then run each item in the list through the existing program and return a winning display if TotalMoney changed.
-
-                string[] betPlaceSlotPostions = inputPosition.Split(' ');
                 //display result based on totalMoney going up or down 
+
+                //Takes the input from the player's choices and places it into a string array based on a space separator.
+                string inputPosition = UI.ChooseALine();
+                string[] betPlaceSlotPostions = inputPosition.Split(' ');
 
                 //Checks to see if theres enough money to make that bet
                 //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
                 placedBet = ConfirmingPlacedBet(totalMoney, placedBet, betPlaceSlotPostions);
                 totalMoney -= (placedBet * betPlaceSlotPostions.Length);
 
-                //loops through and adds random numbers to each position in array then display it. 
+                //Creates a random grid array for the slots then displays it. 
                 slotArrayValues = GetRandomGrid();
                 UI.DisplaySlots(slotArrayValues);
 
+                //run the existing methods here so that they will return true/false foreach betPlaced and change totalMoney.
                 foreach (var betPlace in betPlaceSlotPostions)
                 {
-                    //run the existing methods here so that they will return true/false foreach betPlaced and change totalMoney.
+                    //Checking if player's choices has all matching values
                     bool matchingValues = IsWinningSlot(betPlace, slotArrayValues);
+
+                    //checks to see if the matchingValues is true/false and returns the winning results to totalMoney or losing consequences 
                     totalMoney = WinningResult(matchingValues, placedBet, totalMoney, betPlace);
                 }
-                //Checking if player's choice has all matching values
-                //bool matchingValues = IsWinningSlot(inputPosition, slotArrayValues);
-
-                //checks to see if the matchingValues is true/false and returns the winning results or losing consequences 
-                //totalMoney = WinningResult(matchingValues, placedBet, totalMoney);
             }
             if (totalMoney <= 0)
             {
@@ -61,14 +58,13 @@ namespace Slot_Machine
             }
         }
         /// <summary>
-        /// Takes in a 2D array and loops through it replacing/adding 0-2 numbers randomly.
+        /// Creates a random grid [3,3], with numbers 0-2, then returns it.
         /// </summary>
-        /// <param name="randomGrid">2D array to be filled up with random numbers.</param>
-        /// <returns>Same array with randomly chosen numbers</returns>
+        /// <returns>Array with randomly chosen numbers</returns>
         static int[,] GetRandomGrid()
         {
             Random rng = new Random();
-            int[,] randomGrid = new int[3,3];
+            int[,] randomGrid = new int[3, 3];
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -137,27 +133,6 @@ namespace Slot_Machine
             }
             return placedBet;
         }
-        //static int confirmingPlacedBet(int totalMoney, int placedBet)
-        //{
-        //    bool enoughMoney = false;
-        //    while (!enoughMoney)
-        //    {
-        //        Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on that line?");//TODO add a limiter 
-        //        placedBet = Convert.ToInt32(Console.ReadLine());
-        //        if ((totalMoney - placedBet) >= 0)
-        //        {
-        //            enoughMoney = true;
-        //            Console.Clear();
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Please stay within your limit.");
-        //        }
-        //    }
-        //    return placedBet;
-        //}
-
-
         /// <summary>
         /// Checks to see if an array within a 2D array contains matching values (Horizontally) 
         /// </summary>
