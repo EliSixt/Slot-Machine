@@ -40,7 +40,7 @@ namespace Slot_Machine
                 totalMoney -= (placedBet * betPlaceSlotPostions.Length);
 
                 //loops through and adds random numbers to each position in array then display it. 
-                RandomNumsIntoArray(slotArrayValues);
+                slotArrayValues = GetRandomGrid();
                 UI.DisplaySlots(slotArrayValues);
 
                 foreach (var betPlace in betPlaceSlotPostions)
@@ -63,20 +63,21 @@ namespace Slot_Machine
         /// <summary>
         /// Takes in a 2D array and loops through it replacing/adding 0-2 numbers randomly.
         /// </summary>
-        /// <param name="slotArrayValues">2D array to be filled up with random numbers.</param>
+        /// <param name="randomGrid">2D array to be filled up with random numbers.</param>
         /// <returns>Same array with randomly chosen numbers</returns>
-        static int[,] RandomNumsIntoArray(int[,] slotArrayValues)
+        static int[,] GetRandomGrid()
         {
             Random rng = new Random();
+            int[,] randomGrid = new int[3,3];
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     int randomthreeNums = rng.Next(0, 3);
-                    slotArrayValues[i, j] = randomthreeNums;
+                    randomGrid[i, j] = randomthreeNums;
                 }
             }
-            return slotArrayValues;
+            return randomGrid;
         }
         /// <summary>
         /// Checks for matching diagonal values (diagonally ascending)
