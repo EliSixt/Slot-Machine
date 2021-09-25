@@ -27,6 +27,17 @@ namespace Slot_Machine
             }
         }
         /// <summary>
+        /// Asks for user how much to bet, reads input, and returns amount.
+        /// </summary>
+        /// <param name="totalMoney">The total amount of money.</param>
+        /// <returns>Amount of money entered towards the bet.</returns>
+        public static int GetPlacedBet(int totalMoney)
+        {
+            Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on each of those lines?");
+            int amountOfPlacedBet = Convert.ToInt32(Console.ReadLine());
+            return amountOfPlacedBet;
+        }
+        /// <summary>
         /// Tells the player to choose a line and all the options. Creates a string variable 
         /// with the input and returns it.
         /// </summary>
@@ -41,6 +52,11 @@ namespace Slot_Machine
             string chosenLine = Console.ReadLine();
             return chosenLine;
         }
+        /// <summary>
+        /// Displays slot grid with numbers/letters to use as reference for 
+        /// choosing a line.
+        /// </summary>
+        /// <param name="array"></param>
         public static void DisplaySlots(int[,] array)
         {
             //   array = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };

@@ -113,15 +113,15 @@ namespace Slot_Machine
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>
         /// <param name="placedBet">Player's money bet.</param>
-        /// <returns>placedBet</returns>
+        /// <returns>Amount of the placed bet within the total money limits.</returns>
         static int ConfirmingPlacedBet(int totalMoney, int placedBet, string[] betPlacedSlotPositions)
         {
+            int amountOfPlacedBet = placedBet;
             bool enoughMoney = false;
             while (!enoughMoney)
             {
-                Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on each of those lines?");//TODO add a limiter 
-                placedBet = Convert.ToInt32(Console.ReadLine());
-                if ((totalMoney >= (betPlacedSlotPositions.Length * placedBet)))
+                amountOfPlacedBet = UI.GetPlacedBet(totalMoney);
+                if ((totalMoney >= (betPlacedSlotPositions.Length * amountOfPlacedBet)))
                 {
                     enoughMoney = true;
                     Console.Clear();
@@ -131,7 +131,7 @@ namespace Slot_Machine
                     Console.WriteLine("Please stay within your limit.");
                 }
             }
-            return placedBet;
+            return amountOfPlacedBet;
         }
         /// <summary>
         /// Checks to see if an array within a 2D array contains matching values (Horizontally) 
@@ -214,7 +214,6 @@ namespace Slot_Machine
             {
                 totalMoney += placedBet * 2;
                 Console.WriteLine($"You Won on {theLinePosition}! =) You now have ${totalMoney}!");
-                //Console.WriteLine($"You have ${totalMoney}!");
             }
             else
             {
