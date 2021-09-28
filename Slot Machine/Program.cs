@@ -222,7 +222,7 @@ namespace Slot_Machine
             }
             else
             {
-                Console.WriteLine($"You Lost your bet on {theLinePosition}. =(");
+                UI.LostBet(theLinePosition);
             }
             return totalMoney;
         }

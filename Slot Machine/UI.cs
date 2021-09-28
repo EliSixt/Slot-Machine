@@ -51,6 +51,14 @@ namespace Slot_Machine
             Console.WriteLine($"You Won on {linePosition}! =) You now have ${totalMoney}!");
         }
         /// <summary>
+        /// Displays the line position that the player lost it's bet on.
+        /// </summary>
+        /// <param name="linePosition">The line position of which the player lost at.</param>
+        public static void LostBet(string linePosition)
+        {
+            Console.WriteLine($"You Lost your bet on {linePosition}. =(");
+        }
+        /// <summary>
         /// Asks for user how much to bet, reads input, and returns amount.
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>
