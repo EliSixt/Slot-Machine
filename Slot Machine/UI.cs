@@ -44,7 +44,7 @@ namespace Slot_Machine
         /// Displays updated total amount of money after the win.
         /// Displays the line position that the player won at. 
         /// </summary>
-        /// <param name="linePosition">The line position of which the player won at.</param>
+        /// <param name="linePosition">The line/slot position of which the player won at.</param>
         /// <param name="totalMoney">The total amount of money.</param>
         public static void WonBet(string linePosition, int totalMoney)
         {
@@ -53,7 +53,7 @@ namespace Slot_Machine
         /// <summary>
         /// Displays the line position that the player lost it's bet on.
         /// </summary>
-        /// <param name="linePosition">The line position of which the player lost at.</param>
+        /// <param name="linePosition">The line/slot position of which the player lost at.</param>
         public static void LostBet(string linePosition)
         {
             Console.WriteLine($"You Lost your bet on {linePosition}. =(");

@@ -115,7 +115,8 @@ namespace Slot_Machine
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>
         /// <param name="bet">Player's money bet.</param>
-        /// <returns>Amount of the placed bet within the total money limits.</returns>
+        /// <param name="betPlacedSlotPositions">A string array of all the slot-positions bets.</param>
+        /// <returns>Confirmed bet within the total money limits.</returns>
         static int ConfirmingPlacedBet(int totalMoney, int bet, string[] betPlacedSlotPositions)
         {
             //int amountOfPlacedBet = placedBet;
@@ -208,10 +209,11 @@ namespace Slot_Machine
         /// Checks to see if the matchingValues is true/false and returns the winning display and totalMoney plus the placedBet multiplier.
         /// Else it returns the losing display, totalMoney is unchanged.
         /// </summary>
-        /// <param name="matchingValues">A variable result that checks to see if the player's choice has matching values.</param>
+        /// <param name="matchingValues">A boolean result that checks to see if the player's choice has matching values.</param>
         /// <param name="placedBet">Player's money bet.</param>
         /// <param name="totalMoney">The total amount of money.</param>
-        /// <returns></returns>
+        /// <param name="theLinePosition">The line/slot position being referenced.</param>
+        /// <returns>The losing display || The winning display and totalMoney plus the winning multiplier.</returns>
         static int WinningResult(bool matchingValues, int placedBet, int totalMoney, string theLinePosition)
         {
 
