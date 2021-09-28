@@ -27,6 +27,13 @@ namespace Slot_Machine
             }
         }
         /// <summary>
+        /// Displays a Game Over.
+        /// </summary>
+        public static void GameOver()
+        {
+            Console.WriteLine("You ran out of money. Game Over. =(");
+        }
+        /// <summary>
         /// Asks for user how much to bet, reads input, and returns amount.
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>

@@ -56,7 +56,7 @@ namespace Slot_Machine
             }
             if (totalMoney <= 0)
             {
-                Console.WriteLine("You ran out of money. Game Over. =(");
+                UI.GameOver();
             }
         }
         /// <summary>
