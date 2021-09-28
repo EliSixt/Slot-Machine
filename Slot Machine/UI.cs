@@ -27,11 +27,28 @@ namespace Slot_Machine
             }
         }
         /// <summary>
+        /// Clears the console.
+        /// </summary>
+        public static void ClearConsole()
+        {
+            Console.Clear();
+        }
+        /// <summary>
         /// Displays a Game Over.
         /// </summary>
         public static void GameOver()
         {
             Console.WriteLine("You ran out of money. Game Over. =(");
+        }
+        /// <summary>
+        /// Displays updated total amount of money after the win.
+        /// Displays the line position that the player won at. 
+        /// </summary>
+        /// <param name="linePosition">The line position of which the player won at.</param>
+        /// <param name="totalMoney">The total amount of money.</param>
+        public static void WonBet(string linePosition, int totalMoney)
+        {
+            Console.WriteLine($"You Won on {linePosition}! =) You now have ${totalMoney}!");
         }
         /// <summary>
         /// Asks for user how much to bet, reads input, and returns amount.

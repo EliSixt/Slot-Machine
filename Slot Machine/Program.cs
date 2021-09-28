@@ -19,7 +19,7 @@ namespace Slot_Machine
                     UI.CashOut(totalMoney);
                     break;
                 }
-                Console.Clear();
+                UI.ClearConsole();
 
                 //Making some visual referencing for userInput to place bets on.
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
@@ -218,7 +218,7 @@ namespace Slot_Machine
             if (matchingValues)
             {
                 totalMoney += placedBet * 2;
-                Console.WriteLine($"You Won on {theLinePosition}! =) You now have ${totalMoney}!");
+                UI.WonBet(theLinePosition, totalMoney);
             }
             else
             {
