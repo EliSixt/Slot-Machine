@@ -33,10 +33,12 @@ namespace Slot_Machine
                 string inputPosition = UI.ChooseALine();
                 string[] betPlaceSlotPostions = inputPosition.Split(' ');
 
-                //Checks to see if theres enough money to make that bet
-                //and that the user doesnt enter a huge amount that they dont have, making the program crash later.
+                //Assigns bet from player's input.
+                //Checks to see if theres enough money to make that bet, else it asks until a valid entry is accepted.
+                //Subtracts confirmed bet from total money.
+                placedBet = UI.GetPlacedBet(totalMoney);
                 placedBet = ConfirmingPlacedBet(totalMoney, placedBet, betPlaceSlotPostions);
-                totalMoney -= (placedBet * betPlaceSlotPostions.Length);
+                totalMoney -= placedBet * betPlaceSlotPostions.Length;
 
                 //Creates a random grid array for the slots then displays it. 
                 slotArrayValues = GetRandomGrid();
@@ -112,26 +114,29 @@ namespace Slot_Machine
         /// so that the user doesnt enter a huge amount that they dont have.
         /// </summary>
         /// <param name="totalMoney">The total amount of money.</param>
-        /// <param name="placedBet">Player's money bet.</param>
+        /// <param name="bet">Player's money bet.</param>
         /// <returns>Amount of the placed bet within the total money limits.</returns>
-        static int ConfirmingPlacedBet(int totalMoney, int placedBet, string[] betPlacedSlotPositions)
+        static int ConfirmingPlacedBet(int totalMoney, int bet, string[] betPlacedSlotPositions)
         {
-            int amountOfPlacedBet = placedBet;
+            //int amountOfPlacedBet = placedBet;
             bool enoughMoney = false;
             while (!enoughMoney)
             {
-                amountOfPlacedBet = UI.GetPlacedBet(totalMoney);
-                if ((totalMoney >= (betPlacedSlotPositions.Length * amountOfPlacedBet)))
+                //placedBet;
+                //amountOfPlacedBet = UI.GetPlacedBet(totalMoney);
+                if ((totalMoney >= (betPlacedSlotPositions.Length * bet)))
                 {
+                    //Console.Clear();
                     enoughMoney = true;
-                    Console.Clear();
+                    //return true;
                 }
                 else
                 {
-                    Console.WriteLine("Please stay within your limit.");
+                    //Console.WriteLine("Please stay within your limit.");
+                    bet = UI.GetPlacedBet(totalMoney);
                 }
             }
-            return amountOfPlacedBet;
+            return bet;
         }
         /// <summary>
         /// Checks to see if an array within a 2D array contains matching values (Horizontally) 

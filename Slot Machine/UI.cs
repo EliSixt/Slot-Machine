@@ -33,6 +33,7 @@ namespace Slot_Machine
         /// <returns>Amount of money entered towards the bet.</returns>
         public static int GetPlacedBet(int totalMoney)
         {
+            Console.Clear();
             Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on each of those lines?");
             int amountOfPlacedBet = Convert.ToInt32(Console.ReadLine());
             return amountOfPlacedBet;
