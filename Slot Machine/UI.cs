@@ -8,11 +8,19 @@ namespace Slot_Machine
 {
     public static class UI
     {
+        /// <summary>
+        /// WriteLine a message of the total money after the player decides to not continue and cashout instead.
+        /// </summary>
+        /// <param name="totalMoney">The total amount of money.</param>
         public static void CashOut(int totalMoney)
         {
             Console.Clear();
             Console.WriteLine($"Your cashout is ${totalMoney}!");
         }
+        /// <summary>
+        /// Asks the user if they want to continue.
+        /// </summary>
+        /// <returns>Boolean, based on their answer.</returns>
         public static bool AskToContinue()
         {
             Console.WriteLine("Do you wanna make a bet? yes/no");
@@ -86,10 +94,10 @@ namespace Slot_Machine
             return chosenLine;
         }
         /// <summary>
-        /// Displays slot grid with numbers/letters to use as reference for 
+        /// Displays slot grid array with numbers/letters to use as reference for 
         /// choosing a line.
         /// </summary>
-        /// <param name="array"></param>
+        /// <param name="array">A [3,3] array to be displayed.</param>
         public static void DisplaySlots(int[,] array)
         {
             //   array = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
