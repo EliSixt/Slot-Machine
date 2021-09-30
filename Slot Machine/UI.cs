@@ -35,13 +35,6 @@ namespace Slot_Machine
             }
         }
         /// <summary>
-        /// Clears the console.
-        /// </summary>
-        public static void ClearConsole()
-        {
-            Console.Clear();
-        }
-        /// <summary>
         /// Displays a Game Over.
         /// </summary>
         public static void GameOver()
@@ -75,6 +68,7 @@ namespace Slot_Machine
         {
             Console.Clear();
             Console.WriteLine($"You have ${totalMoney} in total. How many dollars do you wanna bet on each of those lines?");
+            Console.WriteLine("Please stay within your limit.");
             int amountOfPlacedBet = Convert.ToInt32(Console.ReadLine());
             return amountOfPlacedBet;
         }
@@ -100,6 +94,7 @@ namespace Slot_Machine
         /// <param name="array">A [3,3] array to be displayed.</param>
         public static void DisplaySlots(int[,] array)
         {
+            Console.Clear();
             //   array = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
             Console.WriteLine("   a b c");
             int listing = 1;

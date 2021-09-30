@@ -19,7 +19,6 @@ namespace Slot_Machine
                     UI.CashOut(totalMoney);
                     break;
                 }
-                UI.ClearConsole();
 
                 //Making some visual referencing for userInput to place bets on.
                 slotArrayValues = new int[3, 3] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 } };
@@ -119,21 +118,15 @@ namespace Slot_Machine
         /// <returns>Confirmed bet within the total money limits.</returns>
         static int ConfirmingPlacedBet(int totalMoney, int bet, string[] betPlacedSlotPositions)
         {
-            //int amountOfPlacedBet = placedBet;
             bool enoughMoney = false;
             while (!enoughMoney)
             {
-                //placedBet;
-                //amountOfPlacedBet = UI.GetPlacedBet(totalMoney);
                 if ((totalMoney >= (betPlacedSlotPositions.Length * bet)))
                 {
-                    //Console.Clear();
                     enoughMoney = true;
-                    //return true;
                 }
                 else
                 {
-                    //Console.WriteLine("Please stay within your limit.");
                     bet = UI.GetPlacedBet(totalMoney);
                 }
             }
